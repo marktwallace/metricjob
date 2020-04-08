@@ -69,23 +69,24 @@ To view the Prometheus metrics, you can use a browser to GET the following URL:
 ### Deploying to K8s
 
 To deploy to K8s, the built docker image must be pushed to a registry that is accessible to the cluster. Do this with docker push. Here is an example using a docker internal repo. Change the URLs to work for your case.
-
+```
 docker login docker.internal.myrepo.com
 docker tag metricjob:latest docker.internal.myrepo.com/markwallace/metricjob:2
 docker push docker.internal.myrepo.com/markwallace/metricjob:2
+```
 
-
-And now that you have an image uploaded, you will also need imagePullSecrets that are refereneced by your deployment.yaml in the namespace where you will deploy. (You ony need to do this the first time.)
-
+Now that the image is uploaded, you also need imagePullSecrets that are referenced by k8s/deployment.yaml in the namespace where it is deployed. (You ony need to do this the first time.)
+```
 kubectl -m agent create secret docker-registry metricjob_registry \
     --docker-server=docker.internal.myrepo.com \
     --docker-username=DOCKER_USER \
     --docker-password=DOCKER_PASSWORD \
     --docker-email=DOCKER_EMAIL
-
+```
 The K8s deployment and service yaml is in the k8s directory. You will need to modify the deployment yaml to set the env vars as you need them, and to chnage the URL of the metricjob image.
 
 To deploy it all to a K8s cluster,
-
+```
 cd k8s
 kubectl -n agent apply -f .
+```
