@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/main.css">
+        <title>Control panel for creating Prometheus metrics</title>
+    </head>
+    <body>
+        <div class=container>
+            <div class="toptext">
+            <p>
+                This golang program will create Prometheus metrics with the names 
+                you provide below, and update them at the rate specified.
+                The metrics are created and an update loop starts when you press
+                submit.
+            </p>
+            <form action="../metriclist.html" method="get">
+                <label for="limit">Name for session: </label>
+                <input type="text" name="session" class="input-text" style="font-size:25px;"/><br/>
+                <p></p>
+                <button type="submit" id="querybutton" class="btn-pass">SUBMIT</button>
+            </form>
+            </div>
+        </div>
+    </body>
+</html>

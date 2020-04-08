@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: metricjob # Name - MUST MATCH LABELS ON DEPLOYMENT PODS
+  name: metricjob # name of service 
+  namespace: agent
+spec:
+  ports:
+  - port: 8088 # port to expose
+    protocol: TCP # Default
+    targetPort: panelclient # targetPort on container (matches above by default)
+    name: panelclient
+  - port: 8745 # port to expose
+    protocol: TCP # Default
+    targetPort: prometheus # targetPort on container (matches above by default)
+    name: prometheus
+  selector:
+    app: metricjob # Name - MUST MATCH LABELS ON DEPLOYMENT PODS
+  type: ClusterIP # Default, if exposing via ingress. If not, pick LoadBalancer or NodePort
