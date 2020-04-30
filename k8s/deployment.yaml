@@ -1,10 +1,10 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
     app: metricjob
   name: metricjob
-  namespace: agent
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: metricjob
-        image: docker.internal.sysdig.com/markwallace/metricjob:2
+        image: docker.internal.sysdig.com/markwallace/metricjob:5
         ports:
         - containerPort: 8745
           protocol: TCP
@@ -53,13 +53,30 @@ spec:
         - name: COUNTER_RATIO
           value: ".9,.25"
         - name: COUNTER_VEC_NAME
-          value: "aaa_western,aaa_eastern"
+          value: "mj_sfbay,mj_chico"
         - name: COUNTER_VEC_LABEL
-          value: "state,province"
+          value: "aaa_index,aaa_index"
         - name: COUNTER_VEC_CARDINALITY
-          value: "9,5"
+          value: "8,8"
         - name: COUNTER_VEC_RATIO
-          value: ".5,.8"
+          value: ".8,.8"
+        - name: GAUGE_VEC_NAME
+          value: "sine_alpha,sine_noisy"
+        - name: GAUGE_VEC_LABEL
+          value: "aaa_index,aaa_index"
+        - name: GAUGE_VEC_CARDINALITY
+          value: "10,8"
+        - name: GAUGE_VEC_MIN
+          value: "20,0"
+        - name: GAUGE_VEC_MAX
+          value: "90,900"
+        - name: GAUGE_VEC_NOISE
+          value: "0,100"
+        - name: GAUGE_VEC_PERIOD_SECONDS
+          value: "360,500"
+        - name: GAUGE_VEC_PHASE_SHIFT_SECONDS
+          value: "36,45"
+
         resources:
           requests:
             cpu: 100m

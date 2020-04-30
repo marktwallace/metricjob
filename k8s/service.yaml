@@ -4,7 +4,7 @@ metadata:
   labels:
     app: metricjob # Name - MUST MATCH LABELS ON DEPLOYMENT PODS
   name: metricjob # name of service 
-  namespace: agent
+  namespace: default
 spec:
   ports:
   - port: 8088 # port to expose
