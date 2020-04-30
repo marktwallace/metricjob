@@ -23,6 +23,16 @@ COUNTER_VEC_RATIO=.5,.8
 * COUNTER_VEC_CARDINALITY -- cardinality of metrics label, just counting numbers (1,2,3...) for now
 * COUNTER_VEC_RATIO -- probability of an increment each 10 seconds
 
+Gauge vectors are also supported. Currently, Gauge vectors generate sine wave and noise with the following parameters. These are all comma seperated lists.
+
+* GAUGE_VEC_NAME -- name of metric
+* GAUGE_VEC_LABEL -- name of label
+* GAUGE_VEC_CARDINALITY -- number of distinct integer label values
+* GAUGE_VEC_MIN -- minimum value (trough of wave)
+* GAUGE_VEC_MAX -- maximum vale (crest of wave)
+* GAUGE_VEC_NOISE -- max range of random noise added to each instant
+* GAUGE_VEC_PERIOD_SECONDS -- period of wave in seconds
+* GAUGE_VEC_PHASE_SHIFT_SECONDS -- phase shift for each integer label value
 
 ### Building
 

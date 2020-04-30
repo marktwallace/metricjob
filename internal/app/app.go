@@ -35,6 +35,12 @@ type AppContext struct {
 	GaugeVecPeriodSeconds     []int     `env:"GAUGE_VEC_PERIOD_SECONDS"`
 	GaugeVecPhaseShiftSeconds []int     `env:"GAUGE_VEC_PHASE_SHIFT_SECONDS"`
 
+	JoinMeta         string   `env:"JOIN_META"`
+	JoinLabel1       string   `env:"JOIN_LABEL1"`
+	JoinLabel2       string   `env:"JOIN_LABEL2"`
+	JoinLabel1Values []string `env:"JOIN_LABEL1_VALUES"`
+	JoinLabel2Values []string `env:"JOIN_LABEL2_VALUES"`
+
 	// internal state
 	MapToPrometheusCounter    map[string]prometheus.Counter
 	MapToPrometheusCounterVec map[string]*prometheus.CounterVec
@@ -153,9 +159,24 @@ func (app *AppContext) tickerLoop(ticker *time.Ticker, done chan bool) {
 	}
 }
 
+func (app *AppContext) createJoinMeta() {
+	if app.JoinMeta == "" {
+		return
+	}
+	joinMeta := promauto.NewGaugeVec(prometheus.GaugeOpts{Name: app.JoinMeta},
+		[]string{app.JoinLabel1, app.JoinLabel2})
+
+	for i, val1 := range app.JoinLabel1Values {
+		val2 := app.JoinLabel2Values[i]
+		joinMeta.With(prometheus.Labels{app.JoinLabel1: val1, app.JoinLabel2: val2}).Set(1)
+	}
+}
+
 // Start app from main
 func (app *AppContext) Start() {
 	metrics.MainLoopCounter.Inc()
+
+	app.createJoinMeta()
 
 	ticker := time.NewTicker(10 * time.Second)
 	done := make(chan bool)

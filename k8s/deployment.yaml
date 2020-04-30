@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: metricjob
-        image: docker.internal.sysdig.com/markwallace/metricjob:5
+        image: docker.internal.sysdig.com/markwallace/metricjob:6
         ports:
         - containerPort: 8745
           protocol: TCP
@@ -61,22 +61,32 @@ spec:
         - name: COUNTER_VEC_RATIO
           value: ".8,.8"
         - name: GAUGE_VEC_NAME
-          value: "sine_alpha,sine_noisy"
+          value: "sine_alpha,sine_noisy,harmonic_360,harmonic_180,harmonic_90"
         - name: GAUGE_VEC_LABEL
-          value: "aaa_index,aaa_index"
+          value: "aaa_index,aaa_index,a,a,a"
         - name: GAUGE_VEC_CARDINALITY
-          value: "10,8"
+          value: "10,8,10,10,10"
         - name: GAUGE_VEC_MIN
-          value: "20,0"
+          value: "20,0,0,0,0"
         - name: GAUGE_VEC_MAX
-          value: "90,900"
+          value: "90,900,100,100,100"
         - name: GAUGE_VEC_NOISE
-          value: "0,100"
+          value: "0,100,0,0,0"
         - name: GAUGE_VEC_PERIOD_SECONDS
-          value: "360,500"
+          value: "360,500,360,180,90"
         - name: GAUGE_VEC_PHASE_SHIFT_SECONDS
-          value: "36,45"
-
+          value: "36,45,36,36,36"
+        - name: JOIN_META
+          value: "aaa_meta"
+        - name: JOIN_LABEL1
+          value: "aaa_index"
+        - name: JOIN_LABEL2
+          value: "AGreekLetter"
+        - name: JOIN_LABEL1_VALUES
+          value: "0,1,2,3,4,5,6,7,8,9"
+        - name: JOIN_LABEL2_VALUES
+          value: "alpha,beta,gamma,delta,epsilon,zêta,êta,thêta,iota,kappa"
+          
         resources:
           requests:
             cpu: 100m
